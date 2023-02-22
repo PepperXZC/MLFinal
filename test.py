@@ -6,7 +6,7 @@ from sklearn.datasets import load_iris
 from sklearn import tree
 import graphviz
 
-# tree = dtc()
+# 西瓜数据集
 def get_watermalon():
     data = pd.read_excel('watermelon20.xlsx')
     features_list = ['色泽','根蒂','敲声','纹理','脐部','触感','好瓜']
@@ -16,6 +16,7 @@ def get_watermalon():
     data = data.drop('好瓜',axis=1)
     return data, target
 
+# kaggle 数据集
 def get_data(path):
     data = pd.read_csv(path)
     data['TotalCharges']=pd.to_numeric(data['TotalCharges'],errors='coerce')
@@ -45,6 +46,8 @@ class AdaBoost:
         self.clf_arr = []
         self.alpha_arr = []
         self.y_label = None
+
+    # 投票法预测
     def train_predict(self, X):
         y_pred = np.zeros((self.K, X.shape[0]))
         for i in range(self.K):
@@ -90,6 +93,7 @@ class AdaBoost:
         #     res[i] = 
         return
 
+    # 朴素的正确率预测方式，而非投票法
     def predict(self, X):
         res = np.zeros((len(self.y_label), X.shape[0]))
         self.beta = np.log(1 / self.beta) # (1, (len.self.T))
